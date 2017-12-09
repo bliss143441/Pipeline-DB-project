@@ -13,11 +13,8 @@ fi
 X=0
 ALL_NON_RANDOM_WORDS=/home/marc/Development/advancedDB/Pipeline-DB-project/data-ingestion/hashtags
 
-# total number of non-random words available
 non_random_words=`cat $ALL_NON_RANDOM_WORDS | wc -l`
 
-# while loop to generate random words
-# number of random generated words depends on supplied argument
 i=1
 while [ "$i" -ne 0 ]
 do
