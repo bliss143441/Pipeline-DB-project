@@ -1,0 +1,1 @@
+CREATE CONTINUOUS VIEW timing_hashtagsTTL WITH (ttl = '2 minute', ttl_column = 'minuteOfArrival') AS SELECT h, minute(arrival_timestamp) as minuteOfArrival, COUNT(*) as quantity FROM hashtag_stream GROUP BY h, minuteOfArrival;
