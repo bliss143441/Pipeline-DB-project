@@ -31,7 +31,7 @@ insert into pictures_tags Values
 	(12,'Yue');
 	
 CREATE STREAM likes_stream ( pid integer, likes integer);
-
+CREATE TABLE likes_table ( pid integer, likes integer);
 CREATE CONTINUOUS TRANSFORM likes_ct AS
   SELECT t.name, l.likes FROM likes_stream l JOIN pictures_tags t ON l.pid = t.pid;
 
