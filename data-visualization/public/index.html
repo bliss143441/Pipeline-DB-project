@@ -1,12 +1,22 @@
 <html ng-app="data-visualization">
 	<head>
+		<meta charset="utf-8">
 		<title> PipelineDB </title>
+		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 <body ng-controller="mainController">
- Welcome to PipelineDB M***fu**er
+	<nav class="navbar">
+		<a class="navbar-brand" href="">PIPELINEDB</a>
+	</nav>
+	<canvas id="histo_hashtags" class="chart chart-bar"
+		chart-data="hashtagData" chart_labels="hashtagLabels">
+	</canvas>
+
  <script src="bower_components/jquery/dist/jquery.min.js"></script>
  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  <script src="bower_components/angular/angular.min.js"></script>
+ <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+ <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
  <script src="javascripts/app.js"></script>
 </body>
 </html>
