@@ -11,7 +11,7 @@ fi
 
 # Constants
 X=0
-ALL_NON_RANDOM_WORDS=/home/batu/Documents/Pipeline-DB-project/data-ingestion/hashtags
+ALL_NON_RANDOM_WORDS=./hashtags
 
 non_random_words=`cat $ALL_NON_RANDOM_WORDS | wc -l`
 
