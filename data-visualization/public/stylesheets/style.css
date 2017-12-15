@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
   color: #00B7FF;
+  margin-right: 20px;
 }
+
+.right-side-button{
+  float:right;
+}
+
+.table-fixed thead {
+  width: 100%;
+}
+.table-fixed tbody {
+  height: 255px;
+  overflow-y: auto;
+  width: auto;
+  table-layout: fixed;
+  vertical-align: center;
+  align: center;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+
+
+

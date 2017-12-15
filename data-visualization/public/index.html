@@ -1,12 +1,120 @@
 <html ng-app="data-visualization">
 	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<style>
+		    .row.content {height: 550px}
+		    
+	  	</style>
 		<title> PipelineDB </title>
+		<link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+		<link href="stylesheets/style.css" rel="stylesheet">
 	</head>
 <body ng-controller="mainController">
- Welcome to PipelineDB M***fu**er
+	<nav class="navbar navbar-inverse">
+		<div class="navbar-header">
+			<a class="navbar-brand" >PipelineDB</a>
+		</div>
+		<ul class="nav navbar-nav navbar-right">
+        <li><a href="/"><span class="glyphicon glyphicon-refresh"></span> Refresh</a></li>
+      </ul>
+    </nav>
+    <div class="col-sm-12">
+    	<div class="row well">
+    		<div class="row well col-sm-8">
+	    		<div class="row">
+	    			<h4>Hashtags distribution</h4>
+	    			<div class="col-md-2 col-sm-2">
+							<button type="checkbox" class="btn btn-sm btn-primary" ng-click="checkShowAllHashtags()" ng-model="showAllHashtags">
+						        All
+						    </button>
+		           	</div> 
+		        	<div class="col-md-2 col-sm-2">
+		              <div class="form-group">
+		                  <select class="form-control" ng-disabled="showAllHashtags == 1" ng-model="hash1" ng-change="refreshHashtagsList()" ng-options="h for h in allHashtagLabels">
+		                  </select>
+		              </div>
+		           	</div>
+		           	<div class="col-md-2 col-sm-2">
+		              <div class="form-group">
+		                  <select class="form-control" ng-disabled="showAllHashtags == 1" ng-model="hash2" ng-change="refreshHashtagsList()" ng-options="h for h in allHashtagLabels">
+		                  </select>
+		              </div>
+		           	</div>
+		           	<div class="col-md-2 col-sm-2">
+		              <div class="form-group">
+		                  <select class="form-control" ng-disabled="showAllHashtags == 1" ng-model="hash3" ng-change="refreshHashtagsList()" ng-options="h for h in allHashtagLabels">
+		                  </select>
+		              </div>
+		           	</div>
+		           	<div class="col-md-2 col-sm-2">
+		              <div class="form-group">
+		                  <select class="form-control" ng-disabled="showAllHashtags == 1" ng-model="hash4" ng-change="refreshHashtagsList()" ng-options="h for h in allHashtagLabels">
+		                  </select>
+		              </div>
+		           	</div>
+		           	<div class="col-md-2 col-sm-2">
+		              <div class="form-group">
+		                  <select class="form-control" ng-disabled="showAllHashtags == 1" ng-model="hash5" ng-change="refreshHashtagsList()" ng-options="h for h in allHashtagLabels">
+		                  </select>
+		              </div>
+		           	</div>
+		           	
+	           
+	        	</div>
+		      	<div class="col-sm-7">		        
+				    <canvas id="histo_hashtags" class="chart chart-bar"
+						chart-data="hashtagData" chart_labels="hashtagLabels">
+					</canvas>
+				</div>
+				<div class="col-sm-5">		  
+				    <canvas id="histo_hashtags" class="chart chart-doughnut"
+						chart-data="hashtagData" chart_labels="hashtagLabels">
+					</canvas>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="panel panel-default">
+		        <div class="panel-heading">
+		          <h4>
+		            Hashtags list 
+		          </h4>
+		        </div>
+		        <table class="table table-fixed">
+		          <thead>
+		            <tr>
+		              <th class="col-sm-3">Hashtag</th>
+		              <th class="col-sm-1">Total</th>
+		            </tr>
+		          </thead>
+		          <tbody>
+		          	<tr ng-repeat="hash in HashtagsView">
+		          		<td class="col-sm-3">#{{hash.h}}</td>
+		          		<td class="col-sm-1" align="right">{{hash.total}}</td>
+		          </tbody>
+		      </table>
+			</div>
+		</div>
+		<div class="row col-sm-12">
+			<div class="row well col-sm-4">
+				<h4>Recent hashtags activity</h4>
+				<p> An overview of the selected hashtag appearances during the last 5 minutes</p>
+			</div>
+			<div class="row well col-sm-8">	
+				<h4>Recent hashtags activity</h4>	        
+					<canvas id="recent_hashtags" class="chart chart-line"
+							chart-data="hashtagData" chart_labels="hashtagLabels">
+					</canvas>
+			</div>
+		</div>
+	</div>
+
+
  <script src="bower_components/jquery/dist/jquery.min.js"></script>
  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  <script src="bower_components/angular/angular.min.js"></script>
+ <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+ <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
  <script src="javascripts/app.js"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ router.get('/api/hashtagsView', (req, res, next) => {
 			console.log(err);
 			return res.status(500).json({success: false, data:err});
 		}
-		const query = client.query('SELECT * FROM hashtags_view ORDER BY total DESC');
+		const query = client.query('SELECT * FROM hashtags_view ORDER BY total DESC LIMIT 20');
 		query.on('row', (row) => {
 			results.push(row);
 		});
