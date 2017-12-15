@@ -1,11 +1,11 @@
 Client=psql
 flags=-p 5432 -h localhost -d pipeline -f
 
-all: drop_all create_all
+all:  create_hashtag_stream create_hashtags_view create_timings_hashtags_view create_likes
+drop: drop_hashtags_view drop_timings_hashtags_view drop_likes drop_hashtag_stream
 
-create_all: create_hashtags_view create_timings_hashtags_view create_likes
-drop_all: drop_hashtags_view drop_timings_hashtags_view drop_likes
-
+create_hashtag_stream:
+	$(Client) $(flags) ./streaming-postgresql/createHashtags.sql
 hashtags_view: drop_hashtags_view create_hashtags_view
 
 create_hashtags_view:
@@ -29,4 +29,5 @@ create_likes:
 
 drop_likes:
 	$(Client) $(flags) ./streaming-postgresql/dropLikes.sql
-
+drop_hashtag_stream:
+	$(Client) $(flags) ./streaming-postgresql/dropHashtags.sql
