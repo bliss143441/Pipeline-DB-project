@@ -27,7 +27,6 @@ echo $NEW_WORD
 k=1
 while [ "$k" -ne "$random_number_of_words" ]
 do
-echo $NEW_WORD
 RESULT=$(psql -h localhost -p 5432 -d pipeline -c "INSERT INTO hashtag_stream (h) VALUES ('$NEW_WORD');")
 let "k = k + 1"
 done

@@ -22,3 +22,10 @@ pipeline pipeline
 ```bash
 ./data-ingestion/generateRandomHashtags.sh
 ```bash
+
+####Create Tables
+...bash
+make
+...bash
+
+
