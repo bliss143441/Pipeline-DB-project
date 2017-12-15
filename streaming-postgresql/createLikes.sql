@@ -37,6 +37,6 @@ CREATE CONTINUOUS TRANSFORM likes_ct AS
   SELECT t.name, l.likes FROM likes_stream l JOIN pictures_tags t ON l.pid = t.pid;
 
 CREATE CONTINUOUS VIEW likes_ctView AS
-  SELECT name, sum(likes) as sumLikes FROM output_of('likes_ct') GROUP BY name ORDER BY sumLikes desc;
+  SELECT name, sum(likes) as sumLikes FROM output_of('likes_ct');
   
- CREATE MATERIALIZED VIEW likes_mtView AS SELECT name, sum(likes) as sumLikes FROM likes_table l JOIN pictures_tags t ON l.pid = t.pid 	GROUP BY name ORDER BY sumLikes desc;
+ CREATE MATERIALIZED VIEW likes_mtView AS SELECT name, sum(likes) as sumLikes FROM likes_table l JOIN pictures_tags t ON l.pid = t.pid;
