@@ -3,6 +3,10 @@ a {
   margin-right: 20px;
 }
 
+.mainrow {
+  vertical-align: middle;
+}
+
 .right-side-button{
   float:right;
 }
@@ -11,12 +15,11 @@ a {
   width: 100%;
 }
 .table-fixed tbody {
-  height: 255px;
+  height: 300;
   overflow-y: auto;
   width: auto;
   table-layout: fixed;
   vertical-align: center;
-  align: center;
 }
 .table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
   display: block;

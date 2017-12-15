@@ -1,4 +1,4 @@
-angular.module('data-visualization', ["chart.js"])
+angular.module('data-visualization', ["chart.js", 'angularMoment'])
 
 .controller('mainController', ($scope, $http) => {
 	console.log("Hello world");
@@ -11,14 +11,17 @@ angular.module('data-visualization', ["chart.js"])
 
 	$scope.showAllHashtags = 0;
 
+	$scope.TimingHashtagsView = [];
+	$scope.TimingLabels = [];
+	$scope.TimingSeries = [];
+	$scope.TimingData = [];
+
 
 	$http.get('api/hashtagsView')
 	.then(function(success) {
-		console.log(success.data);
-		console.log('here');
+		console.log("Success receiving hashtags view");
 		var i = 0;
 		for (row in success.data) {
-			console.log(success.data[row]);
 			$scope.HashtagsView.push(success.data[row]);
 			$scope.allHashtagData.push(success.data[row].total);
 			$scope.allHashtagLabels.push(success.data[row].h);
@@ -33,8 +36,7 @@ angular.module('data-visualization', ["chart.js"])
 				++i
 			}
 		}
-	})
-	.then(function(error) {
+	}).then(function(error) {
 		console.log("Error retrieving hashtags views" + error);
 	});
 
@@ -44,9 +46,18 @@ angular.module('data-visualization', ["chart.js"])
 		console.log(success);
 		var i = 0;
 		for (row in success.data) {
-			console.log(success.data[row]);
-			$scope.TimingHashtagsView.push(success.data[row]);
+			var rawMinutes = success.data[row].minuteofarrival
+			var minuteOfArrival = new moment(rawMinutes).fromNow();
+			if ($scope.TimingLabels.indexOf(minuteOfArrival) == -1) $scope.TimingLabels.push(minuteOfArrival);
+			var newData = {};
+			newData.label = minuteOfArrival;
+			newData.hashtag = success.data[row].h;
+			newData.quantity = success.data[row].quantity;
+			$scope.TimingHashtagsView.push(newData)
 		}
+
+		while($scope.hash5 == undefined);
+		$scope.refreshHashtagsList();
 	})
 	.then(function(error) {
 		console.log("Error retrieving timing hashtags views" + error);
@@ -56,6 +67,9 @@ angular.module('data-visualization', ["chart.js"])
 	$scope.refreshHashtagsList = function() {
 		$scope.hashtagLabels = [];
 		$scope.hashtagData = [];
+		$scope.TimingSeries = [];
+		$scope.TimingData = [];
+		console.log("refreshHashtagsList function");
 
 		$scope.hashtagLabels.push($scope.hash1);
 		$scope.hashtagData.push($scope.allHashtagData[$scope.allHashtagLabels.indexOf($scope.hash1)]);
@@ -68,20 +82,25 @@ angular.module('data-visualization', ["chart.js"])
 		$scope.hashtagLabels.push($scope.hash5);
 		$scope.hashtagData.push($scope.allHashtagData[$scope.allHashtagLabels.indexOf($scope.hash5)]);
 
-		$scope.hashtagSeries.push($scope.hash1);
-		$scope.hashtagSeries.push($scope.hash2);
-		$scope.hashtagSeries.push($scope.hash3);
-		$scope.hashtagSeries.push($scope.hash4);
-		$scope.hashtagSeries.push($scope.hash5);
+		$scope.TimingSeries.push($scope.hash1);
+		$scope.TimingSeries.push($scope.hash2);
+		$scope.TimingSeries.push($scope.hash3);
+		$scope.TimingSeries.push($scope.hash4);
+		$scope.TimingSeries.push($scope.hash5);
 
-		/*
-		for (row in TimingHashtagsView) {
-			int seriesNumber = checkSeries($scope.TimingHashtagsView[row]);
-			if (seriesNumber >= 0) {
-				$scope.TimingLabels.push($scope.TimingHashtagsView[row].minuteOfArrival);
-			}
-		}*/
-
+		var seriesPos = 0;
+		for (serie in $scope.TimingSeries) {
+				var jsonSerie = $scope.TimingSeries[serie];
+				$scope.TimingData[seriesPos] = [];
+				for (label in $scope.TimingLabels) {
+					var jsonLabel = $scope.TimingLabels[label];
+					console.log(jsonSerie + jsonLabel);
+					var quantity = findQuantity(jsonSerie, jsonLabel);		
+					console.log(quantity);
+					$scope.TimingData[seriesPos].push(quantity);		
+				}
+				++seriesPos;
+		}
 
 
 	}
@@ -98,6 +117,22 @@ angular.module('data-visualization', ["chart.js"])
 			$scope.hashtagLabels.push($scope.allHashtagLabels[row]);
 		}
 
+		console.log(JSON.stringify($scope.TimingSeries));
+		console.log(JSON.stringify($scope.TimingLabels));
+		console.log(JSON.stringify($scope.TimingData));
+
+	}
+
+	var findQuantity = function(hashtag, minute) {
+		for (row in $scope.TimingHashtagsView) {
+			var jsonRow = $scope.TimingHashtagsView[row]
+			if (jsonRow.hashtag === hashtag && jsonRow.label === minute) return parseInt(jsonRow.quantity);
+		}
+		return 0;
+	}
+
+	$scope.lineOptions = {
+		legend: { display : true }
 	}
 
 });
