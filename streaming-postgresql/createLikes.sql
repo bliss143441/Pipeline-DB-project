@@ -1,35 +1,7 @@
 Create Table pictures_tags (PID integer not null, name varchar(15) not null, PRIMARY KEY(PID,name));
 
-insert into pictures_tags Values
-	(1,'Batu'),
-	(1,'Simay'),
-	(2,'Bruno'),
-	(2,'Duy'),
-	(2,'Yue'),
-	(2,'Marc'),
-	(3,'Simay'),
-	(3,'Judit'),
-	(4,'Simay'),
-	(4,'Judit'),
-	(4,'Marc'),
-	(4,'Batu'),
-	(5,'Batu'),
-	(5,'Marc'),
-	(5,'Judit'),
-	(5,'Simay'),
-	(5,'Yue'),
-	(5,'Bruno'),
-	(5,'Duy'),
-	(6,'Ali'),
-	(6,'Ayse'),
-	(7,'Max'),
-	(8,'Daisy'),
-	(9,'Max'),
-	(10,'Marc'),
-	(11,'Duy'),
-	(12,'Bruno'),
-	(12,'Yue');
-	
+COPY pictures_tags FROM '/home/marc/Development/advancedDB/Pipeline-DB-project/streaming-postgresql/tags' (DELIMITER ',');
+
 CREATE STREAM likes_stream ( pid integer, likes integer);
 CREATE TABLE likes_table ( pid integer, likes integer);
 
