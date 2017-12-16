@@ -51,6 +51,49 @@ router.get('/api/timingHashtags', (req, res, next) => {
 	});
 });
 
+router.get('/api/likesView', (req, res, next) => {
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data:err});
+		}
+		const query = client.query('SELECT * FROM likes_ctview ORDER BY name');
+		query.on('row', (row) => {
+			results.push(row);
+		});
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
+	});
+});
 
+router.get('/api/sqlView', (req, res, next) => {
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data:err});
+		}
+		const query = client.query('REFRESH MATERIALIZED VIEW likes_mtview', 
+			function(err, result) {
+				if (err) {
+					return done(err);
+				}
+				const query = client.query('SELECT * FROM likes_mtview ORDER BY name');
+				query.on('row', (row) => {
+					results.push(row);
+				});
+				query.on('end', () => {
+					done();
+					return res.json(results);
+				});
+			});
+		
+	});
+});
 			
 			

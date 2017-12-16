@@ -16,6 +16,12 @@ angular.module('data-visualization', ["chart.js", 'angularMoment'])
 	$scope.TimingSeries = [];
 	$scope.TimingData = [];
 
+	$scope.likesLabels = [];
+	$scope.likesData = [];
+	$scope.sqlLabels = [];
+	$scope.sqlData = [];
+
+
 
 	$http.get('api/hashtagsView')
 	.then(function(success) {
@@ -58,10 +64,46 @@ angular.module('data-visualization', ["chart.js", 'angularMoment'])
 
 		while($scope.hash5 == undefined);
 		$scope.refreshHashtagsList();
+		$scope.refreshLikesView();
 	})
 	.then(function(error) {
 		console.log("Error retrieving timing hashtags views" + error);
 	});
+
+	$scope.refreshLikesView = function() {
+		$scope.likesLabels = [];
+		$scope.likesData = [];
+		$scope.sqlLabels = [];
+		$scope.sqlData = [];
+		
+		$http.get('api/likesView')
+		.then(function(success) {
+			console.log("Get likes");
+			console.log(success);
+			for (row in success.data) {
+				var like = success.data[row];
+				$scope.likesLabels.push(like.name);
+				$scope.likesData.push(like.sumlikes);		
+			}
+		})
+		.then(function(error) {
+			console.log("Error retrieving likes views" + error);
+		});
+
+		$http.get('api/sqlView')
+		.then(function(success) {
+			console.log("Get sql likes");
+			console.log(success);
+			for (row in success.data) {
+				var like = success.data[row];
+				$scope.sqlLabels.push(like.name);
+				$scope.sqlData.push(like.sumlikes);		
+			}
+		})
+		.then(function(error) {
+			console.log("Error retrieving likes views" + error);
+		});
+	}
 
 
 	$scope.refreshHashtagsList = function() {

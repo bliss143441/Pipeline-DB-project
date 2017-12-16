@@ -107,16 +107,17 @@
 			</div>
 		</div>
 		<div class="row well col-sm-12">
-			<div>	
-				<h4>Recent hashtags activity</h4>	        
+			<span class="glyphicon glyphicon-refresh" ng-click="refreshLikesView()"></span>
+			<div class="col-sm-6">	
+				<h4>Distributions of likes</h4>	        
 					<canvas id="recent_hashtags" class="chart chart-radar"
-							chart-data="TimingData" chart-labels="TimingLabels" chart-series="TimingSeries" chart-options="lineOptions">
+							chart-data="likesData" chart-labels="likesLabels">
 					</canvas>
 			</div>
-			<div>	
-				<h4>Recent hashtags activity</h4>	        
+			<div class="col-sm-6">
+				<h4>Distributions of likes (PostgreSQL</h4>	        
 					<canvas id="recent_hashtags" class="chart chart-radar"
-							chart-data="hashtagData" chart-labels="hashtagLabels">
+							chart-data="sqlData" chart-labels="sqlLabels">
 					</canvas>
 			</div>
 		</div>
