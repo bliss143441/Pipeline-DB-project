@@ -23,7 +23,6 @@ awk -v f=1 -v r="$non_random_words" '{printf "%i\n", f + r * $1 / 16777216}'`
 random_number_of_words=`od -N3 -An -i /dev/urandom |
 awk -v f=1 -v r="20" '{printf "%i\n", f + r * $1 / 16777216}'`
 NEW_WORD=$(sed `echo $random_word`"q;d" $ALL_NON_RANDOM_WORDS)
-echo $NEW_WORD
 k=1
 while [ "$k" -ne "$random_number_of_words" ]
 do

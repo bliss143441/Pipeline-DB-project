@@ -1,6 +1,4 @@
-Create Table pictures_tags (PID integer not null, name varchar(15) not null, PRIMARY KEY(PID,name));
-
-COPY pictures_tags FROM '/home/marc/Development/advancedDB/Pipeline-DB-project/streaming-postgresql/tags' (DELIMITER ',');
+CREATE TABLE pictures_tags (PID integer not null, name varchar(15) not null, PRIMARY KEY(PID,name));
 
 CREATE STREAM likes_stream ( pid integer, likes integer);
 CREATE TABLE likes_table ( pid integer, likes integer);

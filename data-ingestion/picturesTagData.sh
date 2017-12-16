@@ -8,7 +8,7 @@ ALL_NON_RANDOM_NAMES=./names
 non_random_names=`cat $ALL_NON_RANDOM_NAMES | wc -l`
 
 i=1
-while [ "$i" -le 5000 ]
+while [ "$i" -le 1000 ]
 do
 random_number_of_names=`od -N3 -An -i /dev/urandom |
 awk -v f=1 -v r=5 '{printf "%i\n", f + r * $1 / 16777216}'`
@@ -30,8 +30,7 @@ let "previous["$random_name"] = 1";
 
 
 NEW_NAME=$(sed `echo $random_name`"q;d" $ALL_NON_RANDOM_NAMES)
-echo $i, $NEW_NAME
-
+RESULT=$(psql -h localhost -p 5432 -d pipeline -c "INSERT INTO pictures_tags VALUES ($i,'$NEW_NAME');")
 let "k = k + 1"
 done
 let "i = i + 1"
