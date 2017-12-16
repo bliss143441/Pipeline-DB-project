@@ -70,7 +70,7 @@ router.get('/api/likesView', (req, res, next) => {
 	});
 });
 
-router.get('/api/sqlView', (req, res, next) => {
+router.get('/api/sqlMtView', (req, res, next) => {
 	const results = [];
 	pg.connect(connectionString, (err, client, done) => {
 		if(err) {
@@ -93,6 +93,25 @@ router.get('/api/sqlView', (req, res, next) => {
 				});
 			});
 		
+	});
+});
+
+router.get('/api/sqlView', (req, res, next) => {
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+		if(err) {
+			done();
+			console.log(err);
+			return res.status(500).json({success: false, data:err});
+		}
+		const query = client.query('SELECT * FROM likes_view ORDER BY name');
+		query.on('row', (row) => {
+			results.push(row);
+		});
+		query.on('end', () => {
+			done();
+			return res.json(results);
+		});
 	});
 });
 			

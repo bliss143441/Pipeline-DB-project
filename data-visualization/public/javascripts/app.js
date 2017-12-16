@@ -64,7 +64,6 @@ angular.module('data-visualization', ["chart.js", 'angularMoment'])
 
 		while($scope.hash5 == undefined);
 		$scope.refreshHashtagsList();
-		$scope.refreshLikesView();
 	})
 	.then(function(error) {
 		console.log("Error retrieving timing hashtags views" + error);
@@ -176,5 +175,7 @@ angular.module('data-visualization', ["chart.js", 'angularMoment'])
 	$scope.lineOptions = {
 		legend: { display : true }
 	}
+
+	$scope.refreshLikesView();
 
 });

@@ -19,10 +19,12 @@ non_random_words=100
 i=1
 while [ "$i" -ne 0 ]
 do
+echo $i
 random_photo=`od -N3 -An -i /dev/urandom |
 awk -v f=1 -v r=12 '{printf "%i\n", f + r * $1 / 16777216}'`
 random_likes=`od -N3 -An -i /dev/urandom |
 awk -v f=1 -v r=2 '{printf "%i\n", f + r * $1 / 16777216}'`
 RESULT=$(psql -h localhost -p 5432 -d pipeline -c "INSERT INTO likes_stream VALUES ($random_photo,$random_likes); INSERT INTO likes_table VALUES ($random_photo, $random_likes);")
+let "i = i + 1";
 sleep $1
 done
