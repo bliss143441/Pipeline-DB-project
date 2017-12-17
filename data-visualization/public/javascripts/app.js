@@ -176,6 +176,5 @@ angular.module('data-visualization', ["chart.js", 'angularMoment'])
 		legend: { display : true }
 	}
 
-	$scope.refreshLikesView();
 
 });
